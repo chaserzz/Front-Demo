@@ -1,0 +1,18 @@
+{
+  "name": "cache-demo",
+  "version": "1.0.0",
+  "description": "一个用来展示前端缓存的Demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zhan Liu",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.13.1",
+    "koa-cache-control": "^2.0.0",
+    "koa-route": "^3.2.0",
+    "koa-router": "^10.0.0",
+    "koa-static": "^5.0.0"
+  }
+}

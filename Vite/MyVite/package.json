@@ -1,0 +1,17 @@
+{
+  "name": "vite_demo",
+  "version": "1.0.0",
+  "description": "手动实现一个简单的Vite",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.13.1",
+    "nodemon": "^2.0.7",
+    "vite": "^2.2.1",
+    "vue": "^3.0.11"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "vitenone",
+  "version": "1.0.0",
+  "description": "\"一个由yarn搭建起来的vite项目\"",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": ""
+  },
+  "author": "Zhan Liu",
+  "license": "MIT",
+  "dependencies": {
+    "vite": "^2.2.3",
+    "vue": "^3.0.11",
+    "vue-router": "^4.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^15.0.0",
+    "@vitejs/plugin-vue": "^1.2.2",
+    "@vue/compiler-sfc": "^3.0.11"
+  }
+}
