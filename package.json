@@ -1,0 +1,35 @@
+{
+  "name": "front-demo",
+  "version": "1.0.0",
+  "description": "前端各种Demo",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaserzz/Front-Demo.git"
+  },
+  "keywords": [
+    "前端",
+    "Vue",
+    "React",
+    "Js",
+    "Browse"
+  ],
+  "author": "Zhan Liu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chaserzz/Front-Demo/issues"
+  },
+  "homepage": "https://github.com/chaserzz/Front-Demo#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
