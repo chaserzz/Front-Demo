@@ -1,4 +1,4 @@
-const route = require("koa-route")
+const route = require("../../node_modules/koa-route")
 const redirect = require("./redirect")  //重定向
 
 // koa框架使用路由

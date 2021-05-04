@@ -1,5 +1,5 @@
 //放置Home相关的请求
-const router = require("koa-route")
+const router = require("../../node_modules/koa-route")
 
 const message = ctx => {
   ctx.body = {

@@ -1,8 +1,8 @@
-const Koa = require("koa")
+const Koa = require("../../node_modules/koa")
 const useRoute = require("./router")
 const path = require('path');
-const serve = require('koa-static'); //静态资源
-const cors = require("koa-cors")  //解决跨域的插件
+const serve = require('../../node_modules/koa-static'); //静态资源
+const cors = require("../../node_modules/koa-cors")  //解决跨域的插件
 
 const options = {
   origin: "http://localhost:3000",  //允许跨域的服务器地址，  *为所有。

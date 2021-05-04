@@ -1,9 +1,9 @@
-const koa = require("koa")
-const router  = require("koa-route")
-const serve = require('koa-static');  // 导入koa-static包
+const koa = require("../../node_modules/koa")
+const router  = require("../../node_modules/koa-route")
+const serve = require('../../node_modules/koa-static');  // 导入koa-static包
 const path=require('path'); //path包
 const fs = require("fs")  //文件包
-var cacheControl = require('koa-cache-control');  // 设置cache-control的中间件
+var cacheControl = require('../../node_modules/koa-cache-control');  // 设置cache-control的中间件
 const app = new koa()
 
 // memory cache & disk cache 的对比案例，可以通过切换Tab
