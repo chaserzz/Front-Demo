@@ -7,7 +7,6 @@ const cors = require("../../node_modules/koa-cors")  //解决跨域的插件
 const options = {
   origin: "http://localhost:3000",  //允许跨域的服务器地址，  *为所有。
   credentials: true,  //允许携带cookie
-  
 }
 
 

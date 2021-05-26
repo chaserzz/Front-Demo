@@ -11,7 +11,7 @@ const render = require("vue-server-renderer").createRenderer({
   template: fs.readFileSync(path.resolve(__dirname,"index.html"),"utf8")
 })  //创建ssr对象
 
-// 模板插值配置
+// 模板中的插值引用配置
 const content = {
   message: "我是模板插值渲染的数据",
   third:`<p style="color: red">我是模板插值渲染的p标签</p>`

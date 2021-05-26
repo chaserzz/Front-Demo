@@ -5,10 +5,10 @@
   </form>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { defineEmit } from "vue"
 import { ref } from "vue"
-let inputValue = ref("")
+let inputValue = ref<string>("") 
 
 //在用defineEmit定义发送的事件名称，会返回一个emit对象
 const emit = defineEmit(['addEvent'])

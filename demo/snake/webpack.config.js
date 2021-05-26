@@ -4,7 +4,6 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 
 module.exports = {
   entry: "./src/index.ts",  //打包入口文件
-  mode: "development",
   devtool: 'inline-source-map', // 不同选项适用于不同环境
   //指定打包的配置
   output:{
@@ -20,6 +19,7 @@ module.exports = {
         test: /\.ts$/,
         use: [
           {
+            //指定加载器
             loader: "babel-loader",
             //设置babel
             options:{
@@ -34,6 +34,7 @@ module.exports = {
                       "ie" : "9"
                     },
                     "corejs":"3",
+                    //使用core.js的方式
                     "useBuiltIns" : "usage"
                   }
                 ]
@@ -63,7 +64,7 @@ module.exports = {
     ]
   },
 
-  //webpack插件
+  //webpack插件 
   plugins:[
     new HTMLWebpackPlugin({
       template: "./index.html"
@@ -73,5 +74,5 @@ module.exports = {
   //设置引用模块
   resolve:{
     extensions: ['.ts','.js']
-  }
+  },
 }

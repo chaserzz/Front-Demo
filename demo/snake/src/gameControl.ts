@@ -14,6 +14,7 @@ class GameControl{
     this.snake = new Snake()
     this.scorePan = new ScorePan(maxLevel)
     this.init()
+    localStorage
   }
   //初始化游戏
   init(){

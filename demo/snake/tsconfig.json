@@ -1,8 +1,22 @@
 {
+  //指定哪些ts文件被编译
+  "include": [
+    "./src/**/*"
+  ],
+  //排除哪些ts文件
+  "exclude": [
+    "./node_modules/**/*"
+  ],
+  //编译选项
   "compilerOptions": {
-    "module": "ES2015",
-    "target": "ES2015",
-    "strict": true,
-    "noEmitOnError": true,
+    "module": "ES2015", //模块化的规范
+    "target": "ES2015", //ts被编译的版本
+    "strict": true,     //严格模式
+    "noEmitOnError": true, //有错误时不生产编译的js
+    // "lib":["DOM","ES2016"],  //第三方库的引用
+    // "outDir": ""  导出的js的文件的位置
+    // "outFile": ""  是否导出到一个文件中  需要module的值为system或者ant
+    // "removeComments": false  是否消除ts文件中的注释
+    // "noEmit": true  //不生产编译后的js
   }
 }

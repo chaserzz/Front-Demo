@@ -23,9 +23,9 @@ const store = router.get('/store', async ctx =>{
 app.use(cacheControl({
   maxAge: 88,   //设置资源过期时间为88888
   // noCache 开启
-  // noCache: true  //请求不要直接使用缓存而需要比对，在逻辑上相当于上方的maxAge
+  noCache: true  //请求不要直接使用缓存而需要比对，在逻辑上相当于上方的maxAge
   // noStore 开启
-  noStore: true  
+  // noStore: true  
 }))
 
 app.use(compare) // 使用路由

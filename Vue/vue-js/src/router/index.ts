@@ -48,10 +48,6 @@ const router = createRouter({
       path: "/providerAndInject",
       component: () => import ("../provide/index.vue")
     },
-    {
-      path: "/upload",
-      component: () => import("../upload/index.vue")
-    }
   ]
 })
 

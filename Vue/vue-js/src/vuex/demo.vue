@@ -24,10 +24,9 @@ let count = computed(() => {
 
 //同步函数使用commit来进行触发
 function addCount(){
-  // store.dispatch("add_count")
-  store.commit(ADD_COUNT)
+  store.dispatch("add_count")
+  // store.commit(ADD_COUNT)
 }
-
 //异步函数中使用dispatch来进行派发，这里的异步函数基本是指网络请求
 function subCount(){
   // store.dispatch("sub_count")

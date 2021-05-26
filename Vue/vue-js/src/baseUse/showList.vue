@@ -10,7 +10,10 @@
 import { defineProps, defineEmit } from "vue"
 
 const prop = defineProps({
-  list: Array
+  list: {
+    type: Array,
+    default: []
+  }
 })
 
 const emit = defineEmit(["deleteEvent"])

@@ -22,7 +22,7 @@ class Food{
   }
 
   //切换food的位置
-  changePosition(){
+  changePosition:() => void = () =>{
     //获得0~280内并且为10的倍数的随机数。  280是由框的290px-食物的10px
     let x = (Math.round(Math.random() * 28)) * 10
     let y = (Math.round(Math.random() * 28)) * 10

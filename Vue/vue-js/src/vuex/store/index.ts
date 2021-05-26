@@ -1,10 +1,10 @@
 import Vuex from "vuex"
-
+import { RootState } from "./rootTypes"
 import mutations from "./mutations"
 import actions from "./actions"
 import getters from "./getters"
 
-const state = {
+const state: RootState = {
   count: 0
 }
 

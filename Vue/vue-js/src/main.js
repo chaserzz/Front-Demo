@@ -2,19 +2,12 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import ElementPlus from "element-plus"
 import 'element-plus/lib/theme-chalk/index.css';
-import store from './vueX/store'
+import store from './vuex/store'
 import router from "./router/index"
-
-import mitt from "mitt"
+import bus from "./bus/index"
 
 import './index.css'
 
-
-const emitter = mitt()
-const bus = {}
-bus.$on = emitter.on
-bus.$off = emitter.off
-bus.$emit = emitter.emit
 
 const app = createApp(App)
 app.config.globalProperties.$bus = bus
