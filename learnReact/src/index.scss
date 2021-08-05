@@ -1,0 +1,14 @@
+/** 用来放置全局样式 */
+@import '~antd/dist/antd.css';
+.ant-layout-header{
+  background-color: #fff;
+}
+
+*{
+  text-align: center;
+}
+
+input {
+  margin-top: 10px;
+  text-align: left;
+}

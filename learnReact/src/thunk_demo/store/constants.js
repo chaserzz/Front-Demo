@@ -1,0 +1,1 @@
+export const GET_MESSAGE2 = "GET_MESSAGE2"
