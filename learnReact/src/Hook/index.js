@@ -7,18 +7,20 @@ import { Layout, Menu } from "antd"
 function Hook(props) {
   let { Header, Content } = Layout
   const route = props.route
+  let baseUrl = "/hook" // 路由基本地址
+  const MenuItems = ["useEffect","useContext","useReducer","useCallback","useRef","useImp"]  //渲染的具体路由地址以及对应的展示名称
   return (
     <Fragment>
       <Layout className="layout">
         <Header>
           <Menu theme="light" mode="horizontal" >
-            <Menu.Item key="useEffect"><NavLink to="/hook/useEffect">useEffect</NavLink></Menu.Item>
-            <Menu.Item key="useContext"><NavLink to="/hook/useContext">useContext</NavLink></Menu.Item>
-            <Menu.Item key="useReducer"><NavLink to="/hook/useReducer">useReducer</NavLink></Menu.Item>
-            <Menu.Item key="useCallback"><NavLink to="/hook/useCallback">useCallback</NavLink></Menu.Item>
-            <Menu.Item key="useMemo"><NavLink to="/hook/useMemo">useMemo</NavLink></Menu.Item>
-            <Menu.Item key="useRef"><NavLink to="/hook/useRef">useRef</NavLink></Menu.Item>
-            <Menu.Item key="useImp"><NavLink to="/hook/useImp">useImp</NavLink></Menu.Item>
+            {MenuItems.map(item => {
+              return (
+                <Menu.Item key={item}>
+                  <NavLink to={`${baseUrl}/${item}`} >{item}</NavLink>
+                </Menu.Item>
+              )
+            })}
           </Menu>
         </Header>
         <Content>

@@ -19,7 +19,7 @@ function App() {
             <Menu.Item key="redux"><NavLink to="/redux">ReduxDemo_Connet</NavLink></Menu.Item>
             <Menu.Item key="reduxThunkDemo"><NavLink to="/reduxThunkDemo">ReduxThunk_Demo</NavLink></Menu.Item>
             <Menu.Item key="reduxSaga"><NavLink to="/reduxSaga">ReduxSaga_Demo</NavLink></Menu.Item>
-            <Menu.Item key="drag"><NavLink to="/drag">ReduxSaga_Demo</NavLink></Menu.Item>
+            <Menu.Item key="drag"><NavLink to="/drag">Drug_Demo</NavLink></Menu.Item>
             <Menu.Item key="Hook"><NavLink to="/hook">Hook_Demo</NavLink></Menu.Item>
           </Menu>
         </Header>
