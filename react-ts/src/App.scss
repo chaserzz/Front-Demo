@@ -1,0 +1,26 @@
+@import '~antd/dist/antd.css';
+*{
+  font-family:'Times New Roman', Times, serif;
+  box-sizing: border-box;
+}
+a{
+  text-decoration: none;
+  color: #000;
+  &:hover{
+    color: #000;
+  }
+}
+
+ul{
+  li{
+    list-style: none;
+  }
+}
+#root{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  &> .ant-layout-content{
+    padding: 0 15px;
+  }
+}

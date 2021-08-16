@@ -1,0 +1,20 @@
+.div-stageContainer{
+  h3{
+    height: 35px;
+    margin-bottom: 15px;
+    line-height: 35px;
+    .span-stageTitle{
+      font-weight: 700;
+    }
+    .span-stageDesc{
+      float: right;
+      margin-right: 10px;
+    }
+    border-bottom: 1px solid #e3e3e3;
+  }
+  .div-stageContent{
+    display: flex;
+    justify-content: space-between;
+
+  }
+}

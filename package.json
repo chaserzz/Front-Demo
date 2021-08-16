@@ -4,6 +4,7 @@
   "description": "前端各种Demo",
   "main": "index.js",
   "dependencies": {
+    "create-react-app": "^4.0.3",
     "koa": "^2.13.1",
     "koa-cache-control": "^2.0.0",
     "koa-cors": "^0.0.16",
