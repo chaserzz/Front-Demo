@@ -16,7 +16,7 @@ export default memo(function Base(props: any) {
       <Card style={{width: "23%",margin: "5px 0"}}
             title="useState"
             hoverable={true}
-            extra={<span onClick={() => setShowComponent("detail")}>Detail</span>}
+            extra={<span onClick={() => setShowComponent(true)}>Detail</span>}
       >
         A Simple Calculate Made By UseState
       </Card>

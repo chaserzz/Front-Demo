@@ -1,21 +1,34 @@
-const path = require("path");
-// const HtmlWebpackPlugin = require("html-webpack-plugin");  //webpack解析Html文件
-// const cleanWebpackPlugin = require('clean-webpack-plugin');
-// const copyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-import webpack from "webpack"
-module.exports = {
-  mode: "development",  //设置模式
+const resolveApp = require('./paths');
+const {merge} = require("webpack-merge");
+const productionConfig = require("./webpack.prod")
+const developConfig = require("./webpack.dev")
+const TerserPlugin = require("terser-webpack-plugin")
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin") // Css压缩
+const commonConfig = {
   devtool: 'source-map', // 设置打包后的格式以及内容 当mode设置为development的时候默认为eval的模式
-  entry: path.resolve(__dirname,"./src/main.js"),  //设置入口文件
+  // entry Dependence方式进行代码分离
+  entry: {
+    // 多文件打包配置
+    main: {
+      import: resolveApp("./src/main.js"),
+      dependOn: ["loadsh,dayjs"] //配置依赖，防止相同依赖多次打包
+    },
+    index: resolveApp("./src/index.js"),
+    loadsh: "loadsh",
+    dayjs: "dayjs"
+  },  //设置入口文件
   //打包后的配置
   output:{
     //打包后的位置
-    path: path.resolve(__dirname,"./dist"),
+    path: resolveApp("./dist"),
     //打包后的文件名
     filename: 'js/[name].[hash:8].js',
-    // assetModuleFieldName: "img/[name][hash:6][ext]"  //asset文件全局配置
-    publicPath: './' //打包之后的文件进行路径的拼接
+    // assetModule FieldName: "img/[name][hash:6][ext]"  //asset文件全局配置
+    publicPath: './', //打包之后的文件进行路径的拼接
+    chunkFielname: '[name].[hash:6].chunk.js' //需要设置魔法注释来设置名字： /*webpackChunkName: "xxx"*/
+  },
+  external:{ //第三方打cdn打包
+    "lodash" : "_"// lodash导入的全局对象 ，需要在html模版中配置cdn的地址，具体可以查看index.html文件
   },
   //webpack-dev-server 安装后配置的内容，实际上是一个express
   devServer:{
@@ -47,12 +60,51 @@ module.exports = {
         },
       ]
     }, 
-    resolve: { //文件解析配置
-      extensions: ['.wasm','js','ts','tsx','jsx','vue'], //当加载的文件没有添加文件类型时按顺序进行添加并查找 
-      alias: {
-        "@": path.resolve(__dirname,'./src') 
-      }
+  },
+  resolve: { //文件解析配置
+    extensions: ['.wasm','js','ts','tsx','jsx','vue'], //当加载的文件没有添加文件类型时按顺序进行添加并查找 
+    alias: {
+      "@": path.resolve(__dirname,'./src') 
     }
+  },
+  optimization:{ // 优化配置
+    minimize: true, //设置为true之后才会使用下面的插件对代码进行操作
+    // 压缩代码
+    minimizer: [
+      new TerserPlugin({ //丑化代码
+        extractComments: false, // 代码注释单独抽取一个文件出来
+        parallel: true, // 是否使用多核cpu进行编译
+        terserOptions: { // 对terser的编译options进行传递，具体查看terser的github
+          mangle: true
+        }
+      })
+    ],
+    // 代码分离配置，与entry分离的结果类似。 使用的splitchunkplugin插件
+    splitChunks:{
+      chunks: "async",  //async: 异步代码进行分离 比如(import动态函数) initial(同步导入分离，比如import)  all(无论同步异步都分离代码)
+      minChunks: 1, //至少被导入了几次后进行分离拆包
+      maxSize: 20000, // 将大于maxSize的包在再次进行拆分
+      minSize: 20000, // 拆分出包代码的最小值(字节)
+      chunkIds: "natural", // 下方打包的id的数值  natural(按自然数排序) name(与文件名相关) determinstic (随机数 )
+      cacheGroups:{
+        // key-value设置，key可以是随意的值，value有以下几个设置
+        vendor:{
+           test: /[\\/]node_moudles[\\/]/,
+           filename: "[id]_vendor.js",
+           priority: -10,
+           chunks: "initial",
+           maxSize: 2000,
+           minSize: 2000
+        },
+        default:{
+          minChunks: 2,
+          filename: "common_[id].js"
+        }
+      },
+    },
+    // true/multiple 异步加载的文件进行多包分制
+    // single 一个文件打包
+    runtimeChunk: 'true'
   },
   module:{
     rules:[
@@ -174,14 +226,15 @@ module.exports = {
     //     }
     //   }
     // })
-
-    // 当在代码中遇到某个变量找不到时，会进行自动导入
-    new webpack.ProvidePlugin({
-      axios: "axios" //全局配置导入的文件， key是名称，v是库
-    }),
-    // 配置css文件放置进入一个单独的文件夹
-    new MiniCssExtractPlugin({ // 使用时需要将css的loader使用MiniCssExtractPlugin.loader来代替css的相关的loader
-      filename: "css/name.[hash:8].css"
-    })
+    new CssMinimizerPlugin()
   ]
+}
+
+// 配置开发和部署环境相同的webpack配置
+module.exports = function (env){
+  const isProduction = env.producation //webpack 环境变量
+  process.env.producation = Boolean(isProduction) // 将webpack运行到环境变量保存起来，这样就可以直接在babel等配置直接进行使用
+
+  const currentConfig = isProduction ? productionConfig : developConfig
+  return merge(commonConfig,currentConfig)
 }

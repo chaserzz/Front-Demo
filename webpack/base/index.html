@@ -9,4 +9,9 @@
 <body>
   Webpack的基础使用
 </body>
+<!-- 使用ejs语法使cdn的加载只有在生产环境下才会使用,有点类似于jsx-->
+<%if (process.env.NODE_ENV ==== "production") { %>
+<!-- 以下是某个cdn的服务以及对应的资源地址--> 
+<script src="XXX/cdn"></script>
+<%} %>
 </html>

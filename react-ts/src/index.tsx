@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-
+import Problem from "./problem"
 ReactDOM.render(
-    <App />,  document.getElementById('root')
+    <Problem />,  document.getElementById('root')
 );

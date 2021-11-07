@@ -1,4 +1,5 @@
 @import '~antd/dist/antd.css';
+
 *{
   font-family:'Times New Roman', Times, serif;
   box-sizing: border-box;
@@ -25,18 +26,29 @@ ul{
   }
   .content{
     position: absolute;
-    opacity: 0;
+    visibility: hidden;
     width: 300px;
     height: 300px;
     left: 50%;
     top: 50%;
-    background-color: lightblue;
+    background-color: #fff;
     transform: translate(-50%,-50%);
     transition: width 500ms,height 500ms, opcity 500ms;
     &.show{
       opacity: 1;
       width: 100vw;
       height: 100vh;
+      visibility: visible;
+    }
+    button{
+      float: right;
+      margin-top: 10px;
+      margin-right: 15px;
+    }
+    &.hidden{
+      opacity: 0.3;
+      width: 50vw;
+      height: 50vh;
     }
   }
   .componentsWrapper{

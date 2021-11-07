@@ -1,0 +1,16 @@
+.div-container{
+  text-align: center;
+  .div-demo{
+    margin-top: 45px;
+    p{
+      margin-bottom: 30px;
+    }
+    .div-oprate{
+      display: flex;
+      justify-content: center;
+      button{
+        margin-left: 10px;
+      }
+    }
+  }
+}

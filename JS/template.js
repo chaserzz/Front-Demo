@@ -1,6 +1,6 @@
 //解析模板字符串
 function render(template,data){
-  const reg = /\{\{(\w+)\}\}/; // 模板字符串正则
+  const reg = /{\{(\w+)\}\}/; // 模板字符串正则
   if (reg.test(template)) { // 判断模板里是否有模板字符串
       const name = reg.exec(template)[1]; // 查找当前模板里第一个模板字符串的字段
       template = template.replace(reg, data[name]); // 将第一个模板字符串渲染
