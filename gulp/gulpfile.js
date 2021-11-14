@@ -1,21 +1,19 @@
-const { src, dest, parallel} = require('gulp');
+const { src, dest, parallel, series} = require('gulp');
 const htmlMin = require("gulp-htmlmin");
 const babel = require("gulp-babel");
 const terser = require("gulp-terser");
-
+const gulpInject = require('gulp-inject');
 
 function htmlTask (cb) {
-  src("./src/*.html")
+  return src("./src/*.html")
   .pipe(htmlMin({
     collapseWhitespace: true
   }))
   .pipe(dest("./dist"))
-
-  cb()
 }
 
 function jsTask (cb){
-  src("./src/**.js")
+  return src("./src/**.js")
   .pipe(babel({
     presets: ['@babel/preset-env']
   }))
@@ -25,12 +23,18 @@ function jsTask (cb){
     }
   }))
   .pipe(dest("./dist"))
-  cb()
 }
 
 function cssTask (cb){
-  src("./src/*.css")
+  return src("./src/*.css")
   .pipe(dest("./dist"))
-  cb()
 }
-exports.default = parallel(htmlTask, jsTask, cssTask);
+
+function injectTask(cb){
+  return src("./dist/*.html")
+         .pipe(gulpInject([src(['./dist/*.js','./dist/*.css'])],{
+           relative: true 
+         }))
+         .pipe(dest("./dist "))
+}
+exports.default = series(parallel(htmlTask, jsTask, cssTask), injectTask);
