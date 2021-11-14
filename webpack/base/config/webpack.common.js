@@ -4,6 +4,12 @@ const productionConfig = require("./webpack.prod")
 const developConfig = require("./webpack.dev")
 const TerserPlugin = require("terser-webpack-plugin")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin") // Css压缩
+const CompressionPlugin = require("compression-webpack-plugin") // html压缩，主要用于build之后，将文件的在传输时，设置的格式为gzip
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const InlineChunkHtmlPlugin = require("react-dev-utils/InlineChunkHtmlPlugin") //将通过runtime进行加载的js文件，作为代码加入到其他js文件中，以减少发送请求的次数
+
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
+const spm = new SpeedMeasurePlugin()
 const commonConfig = {
   devtool: 'source-map', // 设置打包后的格式以及内容 当mode设置为development的时候默认为eval的模式
   // entry Dependence方式进行代码分离
@@ -14,7 +20,7 @@ const commonConfig = {
       dependOn: ["loadsh,dayjs"] //配置依赖，防止相同依赖多次打包
     },
     index: resolveApp("./src/index.js"),
-    loadsh: "loadsh",
+    loadsh: "loadsh", // cdn引入
     dayjs: "dayjs"
   },  //设置入口文件
   //打包后的配置
@@ -25,7 +31,11 @@ const commonConfig = {
     filename: 'js/[name].[hash:8].js',
     // assetModule FieldName: "img/[name][hash:6][ext]"  //asset文件全局配置
     publicPath: './', //打包之后的文件进行路径的拼接
-    chunkFielname: '[name].[hash:6].chunk.js' //需要设置魔法注释来设置名字： /*webpackChunkName: "xxx"*/
+    chunkFielname: '[name].[hash:6].chunk.js', //需要设置魔法注释来设置名字： /*webpackChunkName: "xxx"*/
+    // 打包后的库文件支持的导入类型，umd：支持amd，commonjs，浏览器
+    libraryTarget: "umd",
+    library: "xxx", //库文件名,
+    globalObj: "this" // 全局对象配置
   },
   external:{ //第三方打cdn打包
     "lodash" : "_"// lodash导入的全局对象 ，需要在html模版中配置cdn的地址，具体可以查看index.html文件
@@ -207,9 +217,19 @@ const commonConfig = {
     ],
   },
   plugins:[
-    // new HtmlWebpackPlugin({
-    //   template: path.resolve(__dirname,"./index.html")
-    // }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname,"./index.html"), //模版名称
+      cache: true, //是否使用缓存，当文件没有发生改变时，使用之前的缓存
+      minify: isProduction ? {
+        removeComments: true, //移除注释
+        removeRedundantAttributes: true, //是否移除多余的属性(比如一些标签的默认属性)
+        removeEmptyAttributes: true, //是否移除空属性(比如 id = "")
+        collapseWhitespace: true, //是否移除空格
+        removeStyleLinkTypeAttributes: true, //是否移除link标签上的
+        minifyJS: true, //丑化script标签中的js代码
+        minifyCSS: true //丑化style中的css代码
+      } : false
+    }),
     // new cleanWebpackPlugin(),
     // new DefinPlugin({  // webpack内置模块，用于定义全局的插件
     //   BASE_URL: '"./"' // 会将value中的字符串中的值作为最后打包的内容，所以需要多包一层'' 
@@ -226,7 +246,14 @@ const commonConfig = {
     //     }
     //   }
     // })
-    new CssMinimizerPlugin()
+    new CssMinimizerPlugin(),
+    new CompressionPlugin({
+      threshold: 0, //最小压缩代码字节
+      test: /\.(css|js)$/i,
+      minRatio: 0.8, // 最小压缩比例，如果压缩后的文件/压缩前的文件大小 小于该值才会被压缩
+      algorithm: "gzip" //压缩算法
+    }),
+    new InlineChunkHtmlPlugin(HtmlWebpackPlugin,[/runtime.*\.js /]) //对runtime文件作为代码注入，
   ]
 }
 
@@ -236,5 +263,5 @@ module.exports = function (env){
   process.env.producation = Boolean(isProduction) // 将webpack运行到环境变量保存起来，这样就可以直接在babel等配置直接进行使用
 
   const currentConfig = isProduction ? productionConfig : developConfig
-  return merge(commonConfig,currentConfig)
+  return spm(merge(commonConfig,currentConfig))
 }

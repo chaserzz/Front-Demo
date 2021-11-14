@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "base-serve": "webpack --config base/webpack.config.js",
     "serve": "webpack serve --config config/webpack.dev.js --env development",
-    "build": "webpack --config config/webpack.prod.js --env production"
+    "build": "webpack --config extra/webpack.config.js"
   },
   "author": "Zhan Liu",
   "license": "MIT",

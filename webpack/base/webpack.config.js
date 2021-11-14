@@ -180,7 +180,7 @@ module.exports = {
       axios: "axios" //全局配置导入的文件， key是名称，v是库
     }),
     // 配置css文件放置进入一个单独的文件夹
-    new MiniCssExtractPlugin({ // 使用时需要将css的loader使用MiniCssExtractPlugin.loader来代替css的相关的loader
+    new MiniCssExtractPlugin({ // 使用时需要将css的loader使用MiniCssExtractPlugin.loader来代替css的相关的loader 
       filename: "css/name.[hash:8].css"
     })
   ]
