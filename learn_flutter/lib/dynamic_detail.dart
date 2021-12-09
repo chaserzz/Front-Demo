@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'modal/dynamic_entity.dart';
+
 // route 1.0 路由
 class DynamicDetail extends StatelessWidget {
   const DynamicDetail({Key? key}) : super(key: key);
@@ -48,5 +50,23 @@ class DynamicDetailFluro extends StatelessWidget {
           // 设置是否退出该页面，用于电商退出页面
           return true;
         });
+  }
+}
+
+// route 1.0 路由
+class DynamicDetailV2 extends StatelessWidget {
+  final DynamicEntity dynamicEntity;
+  const DynamicDetailV2(this.dynamicEntity, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('动态详情'),
+      ),
+      body: Center(
+        child: Text("产品 id: ${dynamicEntity.id}"),
+      ),
+    );
   }
 }

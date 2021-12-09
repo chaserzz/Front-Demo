@@ -20,7 +20,7 @@ class RouteTable {
     //登录
     loginPath: (context) => LoginPage(),
     //首页
-    homePath: (context) => AppHomePage(),
+    /* homePath: (context) => AppHomePage(), */
     //商品详情页
     dynamicDetailPath: (context) => DynamicDetail(),
   };

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import 'dynamic_item.dart';
+import 'modal/dynamic_entity.dart';
 
 class DynamicData {
   String imageUrl;
@@ -25,14 +26,18 @@ class DynamicMockData {
 }
 
 class DynamicPage extends StatefulWidget {
-  const DynamicPage({Key? key}) : super(key: key);
+  ValueChanged<DynamicEntity> onItemTapped;
+  DynamicPage(this.onItemTapped, {Key? key}) : super(key: key);
 
   @override
-  State<DynamicPage> createState() => _DynamicPageState();
+  State<DynamicPage> createState() => _DynamicPageState(onItemTapped);
 }
 
 class _DynamicPageState extends State<DynamicPage> {
   int _currentPage = 1;
+  final ValueChanged<DynamicEntity> onItemTapped;
+  _DynamicPageState(this.onItemTapped);
+
   List<Map<String, Object>> _listItems = [];
   static const int pageSize = 18;
   // 获取列表数据
@@ -76,7 +81,8 @@ class _DynamicPageState extends State<DynamicPage> {
                 _listItems[index]['title'].toString(),
                 _listItems[index]['imageUrl'].toString(),
                 _listItems[index]['viewCount'].toString(),
-                index);
+                index,
+                onItemTapped);
           }),
     ));
   }

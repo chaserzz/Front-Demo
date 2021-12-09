@@ -2,12 +2,15 @@
 import 'package:flutter/material.dart';
 import "./routers/router_table.dart";
 import "./routers/fluro_route.dart";
+import 'modal/dynamic_entity.dart';
 
 class DynamicListItem extends StatelessWidget {
-  const DynamicListItem(this.title, this.imageUrl, this.viewCount, this.id,
+  const DynamicListItem(
+      this.title, this.imageUrl, this.viewCount, this.id, this.onTapped,
       {Key? key})
       : super(key: key);
 
+  final ValueChanged<DynamicEntity> onTapped;
   final String imageUrl;
   final String title;
   final String viewCount;
@@ -33,17 +36,20 @@ class DynamicListItem extends StatelessWidget {
               ))
             ],
           )),
-      onTap: () async {
-        Map<String, dynamic> routeParams = {'id': id};
+      onTap: () {
+        /*Map<String, dynamic> routeParams = {'id': id};*/
         // route v1.0 路由传参
         /* var arguments = await Navigator.of(context)
             .pushNamed(RouteTable.dynamicDetailPath, arguments: routeParams); */
 
         //fluro
-        var arguments = await RouterManager.router!
+        /*   var arguments = await RouterManager.router!
             .navigateTo(context, "${RouterManager.dynamicDetailPath}/$id?");
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("from $arguments")));
+            .showSnackBar(SnackBar(content: Text("from $arguments"))); */
+
+        // router 2.0
+        onTapped(DynamicEntity(title, imageUrl, id, int.parse(viewCount)));
       },
     );
   }

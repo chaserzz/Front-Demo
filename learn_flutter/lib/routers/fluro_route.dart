@@ -39,11 +39,11 @@ class RouterManager {
         Handler(handlerFunc: (context, Map<String, dynamic> parameters) {
       return DynamicDetailFluro(parameters['id']?[0]);
     }),
-    homePath: Handler(
+/*     homePath: Handler(
       handlerFunc: (context, parameters) {
         return AppHomePage();
       },
-    )
+    ) */
   };
   static void defineRoutes() {
     routeTable.forEach((path, handler) {

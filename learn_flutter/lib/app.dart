@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_flutter/modal/dynamic_entity.dart';
 
 import "category.dart";
 import "dynamic.dart";
@@ -6,21 +7,26 @@ import "message.dart";
 import "profile.dart";
 
 class AppHomePage extends StatefulWidget {
-  const AppHomePage({Key? key}) : super(key: key);
+  ValueChanged<DynamicEntity> detailPageTap;
+  AppHomePage(this.detailPageTap, {Key? key}) : super(key: key);
 
   @override
-  _AppHomePageState createState() => _AppHomePageState();
+  _AppHomePageState createState() => _AppHomePageState(detailPageTap);
 }
 
 class _AppHomePageState extends State<AppHomePage> {
   int _index = 0;
+  final ValueChanged<DynamicEntity> _detailPageTap;
 
-  final List<Widget> _homeWidgets = [
-    const DynamicPage(),
-    const MessagePage(),
-    const CategoryPage(),
-    const ProfilePage(),
-  ];
+  _AppHomePageState(this._detailPageTap)
+      : _homeWidgets = [
+          DynamicPage(_detailPageTap),
+          const MessagePage(),
+          const CategoryPage(),
+          const ProfilePage(),
+        ];
+
+  final List<Widget> _homeWidgets;
 
   void _onBottomNagigationBarTapped(int index) {
     setState(() {

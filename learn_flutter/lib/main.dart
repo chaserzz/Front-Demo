@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:learn_flutter/router2/app_router_path.dart';
+import 'package:learn_flutter/router2/router_delegate.dart';
 import 'routers/fluro_route.dart';
 
 void main() {
@@ -10,13 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RouterManager.initRouter();
-    return MaterialApp(
+/*     RouterManager.initRouter(); */
+    return MaterialApp.router(
       title: 'App 框架',
+      routeInformationParser: AppRouterInformationParser(),
+      routerDelegate: AppRouterDelegate(),
       theme: ThemeData(
         primaryColor: Colors.blue,
-        accentColor: Colors.blue[600],
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           headline1: TextStyle(
               fontSize: 36.0, fontWeight: FontWeight.bold, color: Colors.white),
           headline2: TextStyle(
@@ -38,8 +41,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Georgia',
       ),
       //navigatorKey: navigationKey,
-      onGenerateRoute:
-          RouterManager.router!.generator, //RouterTable.onGenerateRoute,
+      /*     onGenerateRoute:
+          RouterManager.router!.generator, //RouterTable.onGenerateRoute, */
     );
   }
 }
