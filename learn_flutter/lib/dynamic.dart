@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import 'dynamic_item.dart';
+
 class DynamicData {
   String imageUrl;
   String title;
@@ -73,81 +75,9 @@ class _DynamicPageState extends State<DynamicPage> {
             return DynamicListItem(
                 _listItems[index]['title'].toString(),
                 _listItems[index]['imageUrl'].toString(),
-                _listItems[index]['viewCount'].toString());
+                _listItems[index]['viewCount'].toString(),
+                index);
           }),
     ));
-  }
-}
-
-// 列表展示组件
-class DynamicListItem extends StatelessWidget {
-  const DynamicListItem(this.title, this.imageUrl, this.viewCount, {Key? key})
-      : super(key: key);
-  final String imageUrl;
-  final String title;
-  final String viewCount;
-  static const double ITEM_HEIGHT = 100;
-  static const double TITLE_HEIGHT = 80;
-  static const double MARGIN_SIZE = 10;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.all(MARGIN_SIZE),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _imageWrapper(),
-            Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [_titleWrapper(context), _viewCountWrapper(context)],
-            ))
-          ],
-        ));
-  }
-
-  Widget _viewCountWrapper(context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(MARGIN_SIZE, 0, 0, 0),
-      height: ITEM_HEIGHT - TITLE_HEIGHT,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.remove_red_eye_outlined,
-            size: 14.0,
-            color: Colors.grey,
-          ),
-          const SizedBox(width: 5),
-          Text(
-            viewCount,
-            style: TextStyle(color: Colors.grey, fontSize: 14.0),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // 获得title组件
-  Widget _titleWrapper(context) {
-    return Container(
-      height: TITLE_HEIGHT,
-      margin: EdgeInsets.fromLTRB(MARGIN_SIZE, 0, 0, 0),
-      child: Text(
-        title,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.headline6,
-      ),
-    );
-  }
-
-  //获得图片组件
-  Widget _imageWrapper() {
-    return SizedBox(
-      width: 150,
-      height: ITEM_HEIGHT,
-      child: Image.network(imageUrl),
-    );
   }
 }
