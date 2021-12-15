@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/router2/app_router_path.dart';
-import 'package:learn_flutter/router2/router_delegate.dart';
-import 'routers/fluro_route.dart';
+import 'package:learn_flutter/base/router2/app_router_path.dart';
+import 'package:learn_flutter/base/router2/router_delegate.dart';
+/* import 'routers/fluro_route.dart'; */
 
 void main() {
   runApp(MyApp());

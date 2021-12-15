@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:learn_flutter/app.dart';
 import 'package:learn_flutter/dynamic_detail.dart';
 import 'package:learn_flutter/modal/dynamic_entity.dart';
 import 'package:learn_flutter/routers/login.dart';
 import 'package:learn_flutter/routers/not_found.dart';
 import 'package:learn_flutter/routers/splash.dart';
+import "package:learn_flutter/dynamic.dart";
 import "./app_router_path.dart";
 
 class AppRouterDelegate extends RouterDelegate<AppRouterConfiguration>
@@ -35,32 +37,26 @@ class AppRouterDelegate extends RouterDelegate<AppRouterConfiguration>
     notifyListeners();
   }
 
-  @override
-  void addListener(VoidCallback listener) {
-    // TODO: implement addListener
-  }
-
   //获得当前的视图
   List<Page<void>> _buildPages() {
     print("enter buildPages");
     print(_splashFinished);
     if (_splashFinished) {
-      print(_routerPath);
       return [
         MaterialPage(
-            child: AppHomePage(_handlePushDynamicDetail),
-            key: ValueKey('/home')),
+            child: DynamicPage(_handlePushDynamicDetail),
+            key: ValueKey('home')),
         if (_routerPath == RouterPaths.splash)
           MaterialPage(
-              key: ValueKey('/splash'),
+              key: ValueKey('splash'),
               child: SplashV2(_handleSplashPageFinish)),
         if (_routerPath == RouterPaths.dynamicDetail)
           MaterialPage(
-              key: ValueKey('/dynamicDetail'), child: DynamicDetailV2(state)),
+              key: ValueKey('dynamicDetail'), child: DynamicDetailV2(state)),
         if (_routerPath == RouterPaths.notFound)
-          MaterialPage(key: ValueKey('/notFound'), child: NotFoundPage()),
+          MaterialPage(key: ValueKey('notFound'), child: NotFoundPage()),
         if (_routerPath == RouterPaths.login)
-          MaterialPage(key: ValueKey('/login'), child: LoginPage()),
+          MaterialPage(key: ValueKey('login'), child: LoginPage()),
       ];
     } else {
       return [
@@ -96,17 +92,6 @@ class AppRouterDelegate extends RouterDelegate<AppRouterConfiguration>
   }
 
   @override
-  Future<bool> popRoute() async {
-    // TODO: implement popRoute
-    return true;
-  }
-
-  @override
-  void removeListener(VoidCallback listener) {
-    // TODO: implement removeListener
-  }
-
-  @override
   Future<void> setNewRoutePath(AppRouterConfiguration configuration) async {
     _routerPath = configuration.path;
     _state = configuration.state;
@@ -114,6 +99,7 @@ class AppRouterDelegate extends RouterDelegate<AppRouterConfiguration>
 
   bool _handlePopPage(Route<dynamic> route, dynamic result) {
     final bool success = route.didPop(result);
+    print(success);
     return success;
   }
 }

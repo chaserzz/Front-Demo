@@ -9,15 +9,14 @@ class AppRouterConfiguration {
   AppRouterConfiguration(this.path, this.state);
 }
 
+//将平台发出的新路由通过解析转化成对应的泛型, 这里就是approuterconfguration这种累的数据结构
 class AppRouterInformationParser
     extends RouteInformationParser<AppRouterConfiguration> {
   @override
-  // 路由解析，每一次push一个新的路由对象都会进入这里
+  // 路由解析，每一次push一个新的路由对象都会进入这里,
   Future<AppRouterConfiguration> parseRouteInformation(
       RouteInformation routeInformation) async {
     final String? routeName = routeInformation.location;
-    print("routeName");
-    print(routeName);
     switch (routeName) {
       case '/':
         {

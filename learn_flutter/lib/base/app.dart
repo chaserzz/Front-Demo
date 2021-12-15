@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/modal/dynamic_entity.dart';
+import 'package:learn_flutter/base/modal/dynamic_entity.dart';
 
 import "category.dart";
 import "dynamic.dart";

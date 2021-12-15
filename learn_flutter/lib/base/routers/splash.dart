@@ -63,7 +63,7 @@ class _SplashStateV2 extends State<SplashV2> {
     if (!_initialized) {
       _initialized = true;
       Timer(const Duration(milliseconds: 2000), () {
-        onFinishCallBack(null);
+        onFinishCallBack("finish");
       });
     }
   }
