@@ -30,14 +30,14 @@ class GoodsList extends StatelessWidget {
                         ? null
                         : () {
                             var cart = context.read<CartModel>();
-                            cart.add(goodsEntity);
+                            cart.add(good);
                           },
                     child: isInCart
                         ? const Icon(Icons.check, semanticLabel: 'ADDED')
                         : const Text('ADD'),
                     style: ButtonStyle(
                       overlayColor:
-                          MaterialStateProperty.resolveWith<Color>((states) {
+                          MaterialStateProperty.resolveWith<Color?>((states) {
                         if (states.contains(MaterialState.pressed)) {
                           return Theme.of(context).primaryColor;
                         }

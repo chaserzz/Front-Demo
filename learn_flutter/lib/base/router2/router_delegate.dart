@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:learn_flutter/app.dart';
-import 'package:learn_flutter/dynamic_detail.dart';
-import 'package:learn_flutter/modal/dynamic_entity.dart';
-import 'package:learn_flutter/routers/login.dart';
-import 'package:learn_flutter/routers/not_found.dart';
-import 'package:learn_flutter/routers/splash.dart';
-import "package:learn_flutter/dynamic.dart";
+import 'package:learn_flutter/base/app.dart';
+import 'package:learn_flutter/base/dynamic_detail.dart';
+import 'package:learn_flutter/base/modal/dynamic_entity.dart';
+import 'package:learn_flutter/base/routers/login.dart';
+import 'package:learn_flutter/base/routers/not_found.dart';
+import 'package:learn_flutter/base/routers/splash.dart';
+import "package:learn_flutter/base/dynamic.dart";
 import "./app_router_path.dart";
 
 class AppRouterDelegate extends RouterDelegate<AppRouterConfiguration>

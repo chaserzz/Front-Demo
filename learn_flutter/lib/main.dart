@@ -4,10 +4,12 @@ import 'package:learn_flutter/base/router2/router_delegate.dart';
 /* import 'routers/fluro_route.dart'; */
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   //final GlobalKey navigationKey = GlobalKey<NavigatorState>();
 
   @override

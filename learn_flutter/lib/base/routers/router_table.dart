@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/dynamic_detail.dart';
+import 'package:learn_flutter/base/dynamic_detail.dart';
 import 'login.dart';
 import './not_found.dart';
 import './splash.dart';
-import '../app.dart';
 import 'package:flutter/cupertino.dart';
 
 class RouteTable {
@@ -14,15 +13,15 @@ class RouteTable {
   static String dynamicDetailPath = 'dynamicDetailPath';
   static Map<String, WidgetBuilder> routeTables = {
     //404页面
-    notFoundPath: (context) => NotFoundPage(),
+    notFoundPath: (context) => const NotFoundPage(),
     //启动页
-    splashPath: (context) => Splash(),
+    splashPath: (context) => const Splash(),
     //登录
-    loginPath: (context) => LoginPage(),
+    loginPath: (context) => const LoginPage(),
     //首页
     /* homePath: (context) => AppHomePage(), */
     //商品详情页
-    dynamicDetailPath: (context) => DynamicDetail(),
+    dynamicDetailPath: (context) => const DynamicDetail(),
   };
 
   static Route onGenerateRoute<T extends Object>(RouteSettings settings) {

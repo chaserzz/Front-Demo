@@ -1,5 +1,3 @@
-import 'dart:math';
-
 class GoodsMockData {
   static List<Map<String, dynamic>> list(int page, int size) {
     return List<Map<String, dynamic>>.generate(size, (index) {

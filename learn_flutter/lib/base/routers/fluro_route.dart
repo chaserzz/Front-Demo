@@ -1,5 +1,5 @@
 import 'package:fluro/fluro.dart';
-import 'package:learn_flutter/dynamic_detail.dart';
+import 'package:learn_flutter/base/dynamic_detail.dart';
 
 import 'login.dart';
 import "not_found.dart";

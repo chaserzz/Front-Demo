@@ -7,9 +7,9 @@ class NotFoundPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('404'),
+        title: const Text('404'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('404！抱歉，页面未找到！'),
       ),
     );
