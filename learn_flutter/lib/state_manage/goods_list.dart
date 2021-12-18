@@ -15,8 +15,16 @@ class GoodsList extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("AppBar"),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/cart');
+              },
+            ),
+          ],
         ),
-        body: Consumer(
+        body: Consumer<CartModel>(
           builder: (context, cartList, child) {
             return ListView.builder(itemBuilder: (context, int index) {
               GoodsEntity good = goods[index];

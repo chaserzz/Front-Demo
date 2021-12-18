@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import "./goods_entity.dart";
 
 class CartModel extends ChangeNotifier {
-  late List<GoodsEntity> _goodsList;
+  List<GoodsEntity> _goodsList = [];
 
   get goodList => _goodsList;
   double get totalPrice =>
