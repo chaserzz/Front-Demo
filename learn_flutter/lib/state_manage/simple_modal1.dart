@@ -9,6 +9,7 @@ class SimpleModal1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int count = Provider.of<Model1>(context).count;
+    print(Provider.of(context));
     return Scaffold(
       appBar: AppBar(
         actions: [
