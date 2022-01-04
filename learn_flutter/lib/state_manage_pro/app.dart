@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/state_manage_pro/page/version0.dart';
+import 'package:learn_flutter/state_manage_pro/page/version1.dart';
+import 'package:learn_flutter/state_manage_pro/page/version2.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text("state_manage_pro"),
         ),
-        body: Version(),
+        body: Version2(),
       ),
     );
   }

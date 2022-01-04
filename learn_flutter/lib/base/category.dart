@@ -23,7 +23,7 @@ class CategoryPage extends StatelessWidget {
     return TextButton(
         onPressed: () {
           // router v1.0
-          /*  Navigator.of(context).pushNamed(RouteTable.loginPath); */
+/*            Navigator.of(context).pushNamed(RouteTable.loginPath); */
           RouterManager.router!.navigateTo(context, RouterManager.loginPath);
         },
         child: Text("Login Page"));
@@ -34,7 +34,8 @@ class CategoryPage extends StatelessWidget {
         onPressed: () {
           // router v1.0
           /* Navigator.of(context).pushNamed(RouteTable.notFoundPath); */
-          RouterManager.router!.navigateTo(context, RouterManager.notFoundPath);
+          RouterManager.router!
+              .navigateTo(context, RouterManager.notFoundPath) /*  */;
         },
         child: Text("notFound Page"));
   }
