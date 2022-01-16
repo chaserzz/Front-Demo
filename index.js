@@ -1,34 +1,29 @@
 /**
- * @param {string} s
- * @return {boolean}
+ * @param {number[]} nums1
+ * @param {number} m
+ * @param {number[]} nums2
+ * @param {number} n
+ * @return {void} Do not return anything, modify nums1 in-place instead.
  */
- var isPalindrome = function(s) {
-   s = s.toLocaleLowerCase()
-   let l = 0, r = s.length - 1;
-   while(l < r){
-    let w1 = s[l],w2 = s[r];
-    console.log(w1,w2)
-    if(!isValid(w1)){
-      l++;
-      continue;
+ var merge = function(nums1, m, nums2, n) {
+  let p1 = m - 1;
+  let p2 = n - 1;
+  let len = nums1.length - 1; 
+  while(p1 >= 0 && p2 >= 0){
+    if(nums1[p1] > nums2[p2]){
+      nums1[len] = nums1[p1]
+      p1 --
+      len--
+    }else{
+      nums1[len] = nums2[p2]
+      p2 --
+      len--
     }
-    if(!isValid(w2)){
-      r--;
-      continue;
+  }
+  // p2还有剩余
+  if(p2 > 0){
+    for(let i = len; i >= 0; i--){
+      nums1[i] = nums2[i]
     }
-    if(w1 !== w2){
-      return false
-    }
-    l++;
-    r--;
-   }
-   return true;
+  }
 };
-var isValid = function(str){
-  return (str >= 'a' && str <= 'z') || (str >= '0' && str <= '9');
-}
-
-const result = isPalindrome(
-  "",
-)
-console.log(result)

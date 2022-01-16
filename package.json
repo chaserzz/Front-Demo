@@ -4,6 +4,7 @@
   "description": "前端各种Demo",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.24.0",
     "compression-webpack-plugin": "^9.0.0",
     "create-react-app": "^4.0.3",
     "koa": "^2.13.1",
