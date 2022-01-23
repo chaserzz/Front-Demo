@@ -12,6 +12,10 @@
   "author": "Zhan Liu",
   "license": "MIT",
   "dependencies": {
+    "@babel/generator": "^7.16.8",
+    "@babel/parser": "^7.16.8",
+    "@babel/traverse": "^7.16.8",
+    "@babel/types": "^7.16.8",
     "autoprefixer": "^10.3.5",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.1",
@@ -23,7 +27,9 @@
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
     "style-loader": "^2.0.0",
+    "tapable": "^2.2.1",
     "terser": "^5.9.0",
+    "types": "^0.1.1",
     "webpack": "^5.36.2",
     "webpack-clean-plugin": "^0.2.3",
     "webpack-cli": "^4.6.0"
