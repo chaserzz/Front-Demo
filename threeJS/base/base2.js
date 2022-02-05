@@ -1,27 +1,22 @@
-
     /**
      * 创建场景对象Scene
      */
      var scene = new THREE.Scene();
-     var geometry = new THREE.Geometry(); //声明一个几何体对象Geometry
+     var geometry = new THREE.BufferGeometry(); //声明一个几何体对象Geometry
      var R = 100; //圆弧半径
      var N = 50; //分段数量
-     // 批量生成圆弧上的顶点数据
-     for (var i = 0; i < N; i++) {
-       var angle = 2 * Math.PI / N * i;
-       var x = R * Math.sin(angle);
-       var y = R * Math.cos(angle);
-       geometry.vertices.push(new THREE.Vector3(x, y, 0));
-     }
-     // 插入最后一个点，line渲染模式下，产生闭合效果
-     // geometry.vertices.push(geometry.vertices[0])
-     //材质对象
-     var material = new THREE.LineBasicMaterial({
-       color: 0x000000
-     });
-     //线条模型对象
-     var line = new THREE.Line(geometry, material);
-     scene.add(line); //线条对象添加到场景中
+     const arc = new THREE.ArcCurve(0,0,R,0,Math.PI,true);
+     const leftLine = new THREE.LineCurve(new THREE.Vector2(R, 100), new THREE.Vector2(R, 0, 0))
+     const RightLine = new THREE.LineCurve(new THREE.Vector2(-R, 0, 0), new THREE.Vector2(-R, 100, 0))
+     const curPath = new THREE.CurvePath()
+     curPath.curves.push(leftLine,arc,RightLine);
+     var points = curPath.getPoints(200);
+     geometry.setFromPoints(points)
+     const material = new THREE.LineBasicMaterial({
+       color: 0xff0000
+     })
+     const line = new THREE.Line(geometry,material)
+     scene.add(line)
      /**
       * 光源设置
       */
@@ -48,7 +43,7 @@
      var s = 200; //三维场景显示范围控制系数，系数越大，显示的范围越大
      //创建相机对象
      var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
-     camera.position.set(200, 300, 400); //设置相机位置
+     camera.position.set(0,0,400 ); //设置相机位置
      camera.lookAt(scene.position); //设置相机方向(指向的场景对象)
      /**
       * 创建渲染器对象
@@ -61,5 +56,3 @@
      //制定动画效果
      // 设置时间修正
      renderer.render(scene,camera)
-     console.log('查看group的子对象',group.children);
-     console.log('查看Scene的子对象',scene.children);
