@@ -1,0 +1,38 @@
+{
+  "name": "react-ssr",
+  "version": "1.0.0",
+  "description": "一个用React实现的SSR的Demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon ./build/index.js",
+    "build:ssr": "webpack --config webpack.ssr.js",
+    "build:client": "webpack --config webpack.client.js"
+  },
+  "keywords": [
+    "react",
+    "ssr"
+  ],
+  "author": "Zhan Liu",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "axios": "^0.25.0",
+    "babel-loader": "^8.2.3",
+    "koa": "^2.13.4",
+    "koa-static": "^5.0.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-redux": "7.2.0",
+    "react-router-config": "5.1.1",
+    "react-router-dom": "5.2.0",
+    "redux": "4.0.5",
+    "redux-thunk": "2.3.0",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
