@@ -28,7 +28,6 @@ function App() {
     </Header>
     <Content>
       <StageContainer title="base" description="React Hooks">
-        <Base setShowComponent={setShowComponent} />
       </StageContainer>
     </Content>
     <Footer>

@@ -46,14 +46,12 @@ var Event = (function (){
             key = _shift.call(arguments) // 第二个参数为对应的监听事件的key
             args = arguments, // 剩余参数
             _self = this, // 保存当前调用的this
-            ret,
             stack = cache[key];
         // 当对应的listen为空或者没有监听事件时结束
         if(!stack || !stack.length){
           return;
         }
         return each(stack, function (){
-          console.log('this',this);
           return this.apply(_self,args);
         })
       }
@@ -74,7 +72,7 @@ var Event = (function (){
                 }else{
                   // 触发所有
                   each(offlineStack, function(){
-                    // this?
+                    // each函数中绑定了this为当前数组中的函数对象，所以直接调用即可
                     this();
                   });
                 }
@@ -85,8 +83,9 @@ var Event = (function (){
               trigger: function(){
                 var fn,
                     args,
-                    _self = this,
-                    args = _unshift.call(arguments,cache), //将cache作为第一个参数作为新的arguments
+                    _self = this;
+                    _unshift.call(arguments,cache), //将cache作为第一个参数作为新的arguments
+                    args = arguments
                     fn = function (){
                       return _trigger.apply(_self,args);
                     };
@@ -115,3 +114,8 @@ var Event = (function (){
     }
   };
 }());
+
+Event.trigger('click',1);
+Event.listen('click', function (a){
+  console.log(a);
+})

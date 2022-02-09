@@ -1,5 +1,5 @@
-import type { ISlotProps} from "../../type/index"
-export interface IStageProps extends ISlotProps{
+export interface IStageProps  {
   title: string,
   description: string,
+  children?: any[]
 }

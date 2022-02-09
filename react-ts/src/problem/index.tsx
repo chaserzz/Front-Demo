@@ -1,25 +1,135 @@
-import useCache from "./useCache"
+import React, {Component} from 'react';
+import "./style.scss"
 
-export default function Problem(props: any){
-  var fetch2 = useCache(fetchData, "test2");
-
-  async function fetchData() {
-    const data = await fetch("//127.0.0.1:3002/getMessage");
-    const d = await data.json();
-    console.log(d);
-    return d;
-  }
-  console.log(fetch2(2));
-  console.log(fetch2(2));
-  console.log(fetch2(2));
-  console.log(fetch2(2));
-  console.log(fetch2(2));
-  console.log(fetch2(2));
-
-
-  return (
-    <div>
-      aabbccdd
-    </div>
-  )
+type S = {
+  scrollTop: number,
+  contentHeight: number,
+  showData: string[],
+  positionList: any[]
 }
+type P = {
+  dataList: any[],
+  screenHeight: number,
+  itemSize?: number,
+  estimatedItemSize: number // 预估的子元素的高度
+}
+class Problem extends Component <P,S> {
+    constructor(props: any){
+      super(props);
+      this.state = {
+        scrollTop: 0, // scroll的高度
+        contentHeight: 0, //整体高度
+        showData: [],
+        positionList:[], // 每个数据的高度
+      };
+      (this as any).listRef = React.createRef()
+    }
+    
+    componentDidMount(){
+      let contentHeight = 0;
+      const {estimatedItemSize,dataList, screenHeight} = this.props
+      // 有传入itemSize说明是一个固定高度的虚拟滚动
+      let startIndex = 0 //根据滚动的上半部分来计算获得当前的第几个
+      // 获取每个元素的位置关系,并进行缓存s
+      const position = dataList.map((item,index) => {
+        return {
+          height: estimatedItemSize,
+          top: index * estimatedItemSize,
+          bottom: (index + 1) * estimatedItemSize
+        }
+      });
+      // 设置总高度
+      contentHeight = position[position.length - 1].bottom;
+      let endList = Math.ceil(screenHeight / estimatedItemSize);
+      const showData = dataList.slice(startIndex,endList)
+      this.setState({
+        contentHeight,
+        positionList: position,
+        showData
+      })
+    }                                                                                                                                                                                                                                      
+
+    getStartIndex = (scrollTop:number = 0): number => {
+      const {positionList} = this.state;
+      let left = 0;
+      let right = positionList.length - 1;
+      let trueIndex = null;
+      debugger
+      while(left < right){
+        const middle = Math.floor((right - left) / 2) + left;
+        // 如果bottom和scroll相等，则应该获取新的数据，为start + 1;
+        if(positionList[middle].bottom === scrollTop){
+          return middle + 1;
+        }else if(positionList[middle].bottom < scrollTop){
+          left = middle + 1;
+        }else{
+          if(trueIndex === null || trueIndex > middle){
+            trueIndex = middle
+          }
+          right = middle - 1
+        }
+      }
+      return Number(trueIndex)
+    }
+
+    componentDidUpdate(){
+      const listRef = (this as any).listRef;
+      const {positionList} = this.state
+      for(let i = 0; i < listRef.current.children.length; i++){
+        const node = listRef.current.children[i];
+        let rect = node.getBoundingClientRect();
+        const id = Number(node.dataset.id); //获得当前的id
+        const height = rect.height;
+        const position = positionList[id]; //获得设置的高度
+        let oldHeight = position.height;
+        let dValue = oldHeight - height;
+        if(height !== oldHeight){
+          // 当前的高度和原先的高度不一致，则更新高度
+          position.bottom = position.bottom - dValue;
+          position.height = height;
+          for (let k = id + 1; k < positionList.length; k++) {
+            positionList[k].top = positionList[k - 1].bottom;
+            positionList[k].bottom = positionList[k].bottom - dValue;
+          }
+        }
+      }
+    }
+
+
+    handleScrollOn = (e: any) => {
+      // 拿到高度之后重新计算渲染的数据
+      const {screenHeight = 400, itemSize = 80,dataList, estimatedItemSize} = this.props
+      const {positionList,scrollTop} = this.state
+      const startIndex = this.getStartIndex(e.target.scrollTop);
+      const visibleContent = Math.ceil(screenHeight / estimatedItemSize);
+      const end = startIndex + visibleContent;
+      const showData = dataList.slice(startIndex,end);
+      const newScrollTop = startIndex >= 1 ? positionList[startIndex].bottom : 0;
+      if(scrollTop !== newScrollTop){
+        this.setState({
+          showData,
+          scrollTop: newScrollTop
+        })
+      }
+    }
+
+    render(){
+      const {screenHeight = 400, itemSize = 80} = this.props
+      const {contentHeight,scrollTop,showData} = this.state
+      // return <Table columns={this.getColumns()} dataSource={data1}/>
+      return <div className="infinite-list-container" style={{height: screenHeight}} onScroll={this.handleScrollOn}> {/**虚拟列表的组件，总容器 */}
+      <div className="infinite-list-phantom" style={{height: contentHeight - screenHeight}}></div>{/**虚拟列表的补充高度，用于滚动条的展示 */}
+      <div className="infinite-list" ref={(this as any).listRef} style={{height: screenHeight,transform: `translateY(${scrollTop}px)`}}> {/**虚拟列表的内容 */}
+      {
+        showData.map((item,index) => {
+          return (<span data-id={index} style={{boxSizing: 'border-box',border: '1px solid #e3e3e3',display: 'block',width: "100%",wordWrap: "break-word"}} >
+            {item}
+          </span>)
+        })
+      }
+      </div>
+    </div>
+  }
+}
+
+export default Problem;
