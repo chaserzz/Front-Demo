@@ -8,11 +8,13 @@
     "axios": "^0.24.0",
     "compression-webpack-plugin": "^9.0.0",
     "create-react-app": "^4.0.3",
+    "global": "^4.4.0",
     "koa": "^2.13.1",
     "koa-cache-control": "^2.0.0",
     "koa-cors": "^0.0.16",
     "koa-route": "^3.2.0",
     "koa-static": "^5.0.0",
+    "pm2": "^5.1.2",
     "react-dev-utils": "^11.0.4",
     "speed-measure-webpack-plugin": "^1.5.0",
     "vite": "^2.3.2"

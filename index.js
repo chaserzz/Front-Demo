@@ -14,6 +14,3 @@ var demo = function (){
   return;
 }
 
-var curDemo = curring(demo);
-var args = curDemo(1);
-console.log(args === func);
