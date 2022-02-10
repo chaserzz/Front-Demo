@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Problem from "./problem";
-let dataList = [];
+let dataList: any[] = [];
 const fonts = "ashuidbasuiey12384y8sjnoijdiojdr12890u4e98asnikdbnjklabfibauihbahjcbuiy9783y9";
-for (let index = 1; index <= 1000; index++) {
+for (let index = 1; index <= 100; index++) {
     let str = ''
-    const nums = index * Math.random() * 70
+    const nums = Math.random() * 400
     for(let i = 0; i < nums; i++){
         str = str + fonts[Math.floor(Math.random() * fonts.length)]
     }
     dataList.push(str);
 }
 ReactDOM.render(
-    <Problem  screenHeight={400} estimatedItemSize={40} dataList={dataList}/>,  document.getElementById('root')
+    <Problem  screenHeight={400} estimatedItemSize={50} dataList={dataList} bufferSize={8}/>,  document.getElementById('root')
 );
