@@ -2,9 +2,9 @@
 // 则不再进行剩余的网络请求的发送，否则需要进行多次网络请求的发送
 // 请求需要按顺序进行发送
 
-const cache:any = {}
+const cache = {}
 // cache作为缓存，symbol作为标识
-function useCache(fetchFunc : any,symbol: string | number){
+function useCache(fetchFunc,symbol){
   return (params: any) => {
     return new Promise((resolve,reject) => {
       let cacheConfig: any = cache[symbol]
@@ -46,4 +46,29 @@ function useCache(fetchFunc : any,symbol: string | number){
     })
   }
 }
+function cancelTimer(id){
+  window.cancelAnimationFrame(id)
+}
+
+function requestSetTimeOut(callBack,delay,callObj){
+  let start;
+  let id;
+  Promise.resolve().then(() => {
+    start = Date.now();
+  });
+  const timer = () => {
+    if(Date.now() - start >= delay){
+      callBack.call();
+    }else{
+      id = window.requestAnimationFrame(timer);
+    }
+  }
+  return id
+}
+
 export default useCache
+
+export {
+  cancelTimer,
+  requestSetTimeOut
+}

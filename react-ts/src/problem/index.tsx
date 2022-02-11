@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import { throttle } from '../utils/UI-help';
 import "./style.scss"
+import { requestSetTimeOut } from './useCache';
 type S = {
   scrollTop: number,
   contentHeight: number,
   showData: string[],
   positionList: any[],
   startIndex: number,
+  isScroll: boolean
   [propName: string]: any
 }
 type P = {
@@ -15,6 +17,12 @@ type P = {
   itemSize?: number,
   estimatedItemSize: number // 预估的子元素的高度
   bufferSize: number //缓存个数
+}
+
+type Position = {
+  height: number,
+  top: number,
+  bottom: number
 }
 class Problem extends Component <P,S> {
     constructor(props: any){
@@ -25,8 +33,10 @@ class Problem extends Component <P,S> {
         showData: [], //渲染的列表
         positionList:[], // 每个数据的高度
         startIndex: 0, // 开始的index
+        isScroll: false,
       };
-      (this as any).listRef = React.createRef()
+      (this as any).listRef = React.createRef();
+      (this as any).timerId = null;
     }
     
     componentDidMount(){
@@ -39,7 +49,8 @@ class Problem extends Component <P,S> {
         return {
           height: estimatedItemSize,
           top: index * estimatedItemSize,
-          bottom: (index + 1) * estimatedItemSize
+          bottom: (index + 1) * estimatedItemSize,
+          id: index
         }
       });
       // 设置总高度
@@ -53,15 +64,33 @@ class Problem extends Component <P,S> {
       })
     }                                                                                                                                                                                                                                      
 
-    componentDidUpdate(){
-      this.getAndFixPosition()
+    componentDidUpdate(preProps: P, preState: S){
+      if(this.state.startIndex !== preState.startIndex && this.state.isScroll === false){
+        this.getAndFixPosition()
+      }
     }
 
+    debounceScrollEnd = () => {
+      if(this.state.timerId){
+        cancelAnimationFrame((this as any).timerId);
+      }
+      requestSetTimeOut(
+        this.debounceScrollEndCallBack.bind(this),
+        150
+      )
+    }
+
+    debounceScrollEndCallBack = () => {
+      (this as any).timeId = null;
+      this.setState({
+        isScroll: false,
+      })
+    }
     // 获得当前dom的缓存以及修正对应的scrollTop
-    getAndFixPosition = throttle(() => {
+    getAndFixPosition = () => {
       const listRef = (this as any).listRef;
-      const {positionList,scrollTop} = this.state
-      const {dataList, screenHeight,estimatedItemSize, bufferSize} = this.props
+      const {positionList,startIndex} = this.state
+      const {dataList, screenHeight} = this.props
       for(let i = 0; i < listRef.current.children.length; i++){
         const node = listRef.current.children[i];
         let rect = node.getBoundingClientRect();
@@ -80,20 +109,30 @@ class Problem extends Component <P,S> {
           }
         }
       }
-      console.log('position',positionList)
       const contentHeight = positionList[positionList.length - 1].bottom;
-      const startIndex = this.getStartIndex(scrollTop);
-      const visibleContent = Math.ceil(screenHeight / estimatedItemSize);
-      const end = startIndex + visibleContent + bufferSize;
+      const visibleContent = Number(this.getVisibelCount(positionList,startIndex,screenHeight));
+      const end = startIndex + visibleContent;
       const showData = dataList.slice(startIndex,end);
       const newScrollTop = startIndex >= 1 ? positionList[startIndex - 1].bottom : 0;
       this.setState({
         positionList,
         showData,
         scrollTop : newScrollTop,
-        contentHeight
+        contentHeight,
       });
-    },500)
+    }
+
+    getVisibelCount = (positionList: Position[],startIndex : number,screenHeight: number) => {
+      let offset = 0;
+      for (let index = startIndex + 1; index < positionList.length; index++) {
+        if(offset + positionList[index].height >= screenHeight){
+          return index
+        }else{
+          offset += positionList[index].height
+        }
+      }
+    }
+
 
     // 获得当前的startIndex
     getStartIndex = (scrollTop:number = 0): number => {
@@ -123,13 +162,14 @@ class Problem extends Component <P,S> {
     handleScrollOn = (e: any) => {
       // 拿到高度之后重新计算渲染的数据
       const {scrollTop,positionList} = this.state;
-      const {estimatedItemSize, screenHeight,dataList, bufferSize} = this.props
+      const {screenHeight,dataList, bufferSize} = this.props
       const startIndex = this.getStartIndex(e.target.scrollTop);
       console.log('startIndex',startIndex);
-      const visibleContent = Math.ceil(screenHeight / estimatedItemSize);
-      const end = startIndex + visibleContent + bufferSize;
+      const visibleContent = Number(this.getVisibelCount(positionList,startIndex,screenHeight));
+      const end = startIndex + visibleContent;
       const showData = dataList.slice(startIndex,end);
       const newScrollTop = startIndex >= 1 ? positionList[startIndex - 1].bottom : 0;
+      this.debounceScrollEnd();
       if(scrollTop !== newScrollTop){
         this.setState({
           showData,
@@ -141,14 +181,14 @@ class Problem extends Component <P,S> {
 
     render(){
       const {screenHeight = 400} = this.props
-      const {contentHeight,scrollTop,showData} = this.state
+      const {contentHeight,scrollTop,showData,startIndex} = this.state
       // return <Table columns={this.getColumns()} dataSource={data1}/>
       return <div className="infinite-list-container" style={{height: screenHeight}} onScroll={this.handleScrollOn}> {/**虚拟列表的组件，总容器 */}
       <div className="infinite-list-phantom" style={{height: contentHeight - screenHeight}}></div>{/**虚拟列表的补充高度，用于滚动条的展示 */}
       <div className="infinite-list" ref={(this as any).listRef} style={{height: screenHeight,transform: `translateY(${scrollTop}px)`}}> {/**虚拟列表的内容 */}
       {
         showData.map((item,index) => {
-          return (<span data-id={index} style={{boxSizing: 'border-box',border: '1px solid #e3e3e3',display: 'block',width: "100%",wordWrap: "break-word"}} >
+          return (<span data-id={index + startIndex} style={{boxSizing: 'border-box',border: '1px solid #e3e3e3',display: 'block',width: "100%",wordWrap: "break-word"}} >
             {item}
           </span>)
         })
