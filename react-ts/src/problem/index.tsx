@@ -1,7 +1,6 @@
-import urlencode from "urlencode"
 import React,{} from "react"
 import "./index.scss"
-
+const urlencode = require("urlencode")
 type P = {
   [propName: string] : any
 }
