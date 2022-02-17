@@ -7,6 +7,7 @@
  * @return {number}
  */
  const dirs = [[-2, -1], [-2, 1], [2, -1], [2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2]];
+ // 使用动态规划加dfs来解决
  var knightProbability = function(n, k, row, column) {
      const dp = new Array(k + 1).fill(0).map(() => new Array(n).fill(0).map(() => new Array(n).fill(0)));
      for (let step = 0; step <= k; step++) {
