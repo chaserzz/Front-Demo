@@ -23,7 +23,7 @@ type Position = {
   top: number,
   bottom: number
 }
-class Problem extends Component <P,S> {
+class VertualList extends Component <P,S> {
     constructor(props: any){
       super(props);
       this.state = {
@@ -75,8 +75,7 @@ class Problem extends Component <P,S> {
       }
       requestSetTimeOut(
         this.debounceScrollEndCallBack.bind(this),
-        150,
-        this
+        150
       )
     }
 
