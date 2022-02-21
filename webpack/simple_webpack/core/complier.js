@@ -67,9 +67,9 @@ class Complier{
     // 查看loader并开始使用loader对文件进行解析
     Object.keys(entrys).forEach(entryName => {
       const entryPath = entrys[entryName];
-      const entry = this.buildModule(entryName,entryPath);
-      this.entries.add(entry);
-      this.buildUpChunk(entryName,entry)
+      const entry = this.buildModule(entryName,entryPath); // 分析入口文件以及对应依赖的模块
+      this.entries.add(entry); // 将对应的入口文件加入到entries中
+      this.buildUpChunk(entryName,entry); // 打包每一个入口文件
     });
   }
 
@@ -125,7 +125,7 @@ class Complier{
     const module = {
       id: moduleId,
       dependencies: new Set(), // 该模块所依赖模块绝对路径地址
-      name: [moduleName], // 该模块所属的入口文件
+      name: [moduleName], // 该模块所属的入口文件,或者说是依赖该模块的模块id
     };
     // 调用babel分析我们的代码
     const ast = parser.parse(this.moduleCode, {
@@ -135,11 +135,13 @@ class Complier{
     traverse(ast,{
       CallExpression: (nodePath) => {
         const node = nodePath.node;
+        // commonJs的webpack打包
         if (node.callee.name === 'require') {
           // 获得源代码中引入模块相对路径
           const requirePath = node.arguments[0].value;
           // 寻找模块绝对路径 当前模块路径+require()对应相对路径
           const moduleDirName = path.posix.dirname(modulePath);
+          // 使用给模块添加文件后缀，使用options中的文件进行查找是否存在对应的文件，并返回其绝对路径
           const absolutePath = tryExtensions(
             path.posix.join(moduleDirName, requirePath),
             this.options.resolve.extensions,
@@ -149,7 +151,7 @@ class Complier{
           const moduleId = './' + path.posix.relative(this.rootPath,absolutePath);
           // 通过babel修改源代码中的require变成__webpack_require__语句
           node.callee = t.identifier('__webpack_require__');
-          // 修改源代码中require语句引入的模块 全部修改变为相对于跟路径来处理
+          // 修改源代码中require语句引入的模块 全部修改变为相对于根路径来处理
           node.arguments = [t.stringLiteral(moduleId)];
           //判断文件是否已经被添加到依赖文件中一次
           const moduleIds = Array.from(this.modules).map(module => module.id);
@@ -197,7 +199,9 @@ class Complier{
   exportFile(callback){
     const output = this.options.output;
     this.chunks.forEach(chunk => {
+      // 对配置文件中fileName进行替换
       const parseFileName = output.filename.replace('[name]', chunk.name);
+      // 生产webpack的最终的代码并加入到asstes中 asstes: fileName -> webpack代码
       this.assets[parseFileName] = getSourceCode(chunk);
     });
     // 调用Plugin emit钩子
