@@ -1,16 +1,5 @@
-let func = function (){
-  if(arguments.length === 0){
-
-  }else{
-    return arguments.callee;
-  }
-}
-var curring = function (fn){
-  var args = [];
-  return func;
-};
-
-var demo = function (){
-  return;
-}
-
+const config = {};
+const key = "name";
+const prop = "zard";
+1 === 1 || (config[key] = prop)
+console.log(config);
