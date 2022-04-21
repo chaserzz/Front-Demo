@@ -8,7 +8,6 @@ import { Layout, Menu } from "antd"
 
 function App() {
   let { Header, Content } = Layout
-
   return (
     <Provider store={store}>
       <HashRouter >

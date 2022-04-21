@@ -14,7 +14,7 @@ import "codemirror/theme/material.css"
 function App() {
   const [showComponent, setShowComponent] = useState(false);
   useEffect(() => {
-
+    console.log('s');
   },[])
   
   // 隐藏展示demo的div
