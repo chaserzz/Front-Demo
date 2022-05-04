@@ -118,6 +118,7 @@ function resolutionProcedure(promise2, x, resolve, reject) {
     return reject(new TypeError('Error'));
   }
   // x为一个promise，则then函数之后返回的promise要继承x的promise的状态
+  // 即如果x是fulfiiled状态则promise2也应该是fulfiied状态
   if (x instanceof MyPromise) {
     x.then(function(value) {
         resolutionProcedure(promise2, value, resolve, reject)
