@@ -14,6 +14,8 @@ import UseCallback from "../Hook/useCallback"
 import UseMemo from "../Hook/useMemo"
 import UseRef from "../Hook/useRef"
 import UseImp from "../Hook/useImp"
+import Teleport1 from "src/teleprot1/teleport1"
+import Teleport2 from "src/teleport2/teleport2"
 const routes = [
   {
     path:'/',
@@ -21,6 +23,16 @@ const routes = [
     render: () => (
       <Redirect to="/toDoList" />
     )
+  },
+  {
+    path: '/teleport1',
+    component: Teleport1,
+    exact: true,
+  },
+  {
+    path: '/teleport2',
+    component: Teleport2,
+    exact: true
   },
   {
     path: '/toDoList',

@@ -20,6 +20,8 @@ function App() {
             <Menu.Item key="reduxSaga"><NavLink to="/reduxSaga">ReduxSaga_Demo</NavLink></Menu.Item>
             <Menu.Item key="drag"><NavLink to="/drag">Drug_Demo</NavLink></Menu.Item>
             <Menu.Item key="Hook"><NavLink to="/hook">Hook_Demo</NavLink></Menu.Item>
+            <Menu.Item key="teletPort1"><NavLink to='/teleport1'>Teleport1</NavLink></Menu.Item>
+            <Menu.Item key="teletPort2"><NavLink to='/teleport2'>Teleport2</NavLink></Menu.Item>
           </Menu>
         </Header>
         <Content>
