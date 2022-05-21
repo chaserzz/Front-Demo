@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { throttle, requestSetTimeOut, cancelTimer} from '../utils';
 import "./style.scss"
 type S = {
   scrollTop: number,
@@ -73,10 +72,6 @@ class VertualList extends Component <P,S> {
       if(this.state.timerId){
         cancelAnimationFrame((this as any).timerId);
       }
-      requestSetTimeOut(
-        this.debounceScrollEndCallBack.bind(this),
-        150
-      )
     }
 
     debounceScrollEndCallBack = () => {
@@ -138,7 +133,7 @@ class VertualList extends Component <P,S> {
       const {positionList} = this.state;
       let left = 0;
       let right = positionList.length - 1;
-      let trueIndex = null;
+      let trueIndex: null | number = null;
       if(scrollTop > 40){
       }
       while(left <= right){
@@ -197,4 +192,4 @@ class VertualList extends Component <P,S> {
   }
 }
 
-export default Problem;
+export default VertualList;

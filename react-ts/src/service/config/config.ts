@@ -16,7 +16,7 @@ const testConfig: INetworkConfig = {
 }
 
 const getNetworkConfig: (currentEnv: projectEnv) => INetworkConfig = (currentEnv) => {
-  let config = null
+  let config: any = null
   switch(currentEnv){
     case "development": {
       config =  developmentConfig;
