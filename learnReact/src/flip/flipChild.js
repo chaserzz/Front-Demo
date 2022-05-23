@@ -1,29 +1,39 @@
-import React, { memo, useContext, useLayoutEffect, useRef, useState, } from 'react'
+import React, { memo, useContext, useEffect, useLayoutEffect, useRef, useState, } from 'react'
 import FlipContext from './flipContext'
+import { calculateInvert } from './utils';
 const FlipChild = memo(({children,name}) => {
   const {
     mapNameToRect,
     setMapNameToRect
   } = useContext(FlipContext);
   const [visible, setVisible] = useState(false);
-  const curDom = useRef(null)
+  const curDom = useRef(null);
+  // 使用useEffect获取挂载时的dom数据
+  useEffect(() => {
+    
+  },[]);
+  // 使用layout获取离开前的dom数据
   useLayoutEffect(() => {
+    const curRect = curDom.current.getBoundingClientRect();
+    console.log('mapNameToRect',mapNameToRect)
     if(mapNameToRect[name]){
       const preRect = mapNameToRect[name];
-      const curRect = document.getElementById(name).getBoundingClientRect()
-      console.log('pre',preRect,curRect)
-      setVisible(true)
+      const {left,top,scalX,scalY} = calculateInvert(preRect,curRect);
+      const player = curDom.current.animate([
+        {transform: `translate(${left}px,${top}px) scale(${scalX},${scalY})`},
+        {transform: 'none'}
+      ],{
+        duration: 3000,
+        easing: "cubic-bezier(0,0,0.32,1)",
+      });
+      setVisible(true);
     }else{
-      setVisible(true)
+      setVisible(true);
     }
-    return () => {
-      const rect = curDom.current.getBoundingClientRect();
-      setMapNameToRect(rect,name)
-    }
-  }, [])
-  console.log('render',visible)
+    setMapNameToRect(curRect,name);
+  }, []);
   return (
-    <div id={name} style={visible ? {} : {display: 'none'}} ref={curDom}>
+    <div id={name} ref={curDom}>
       {children}
     </div>
   )

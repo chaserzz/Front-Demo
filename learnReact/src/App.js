@@ -26,10 +26,15 @@ function App() {
                 <Menu.Item key="teletPort2"><NavLink to='/teleport2'>Teleport2</NavLink></Menu.Item>
               </Menu>
             </Header>
-            <Content>
+            <div>
               {renderRoutes(route)}
-            </Content>
+            </div>
           </Layout>
+          <button onClick={() => {
+            console.log(
+              document.getElementById('teleport').getBoundingClientRect()
+            )
+          }}>logImgRect</button>
         </HashRouter> 
       </FlipParent>
     </Provider>
