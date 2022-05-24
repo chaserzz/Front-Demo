@@ -24,6 +24,7 @@ function App() {
                 <Menu.Item key="Hook"><NavLink to="/hook">Hook_Demo</NavLink></Menu.Item>
                 <Menu.Item key="teletPort1"><NavLink to='/teleport1'>Teleport1</NavLink></Menu.Item>
                 <Menu.Item key="teletPort2"><NavLink to='/teleport2'>Teleport2</NavLink></Menu.Item>
+                <Menu.Item key="zzDemo"></Menu.Item>
               </Menu>
             </Header>
             <div>
@@ -35,6 +36,7 @@ function App() {
               document.getElementById('teleport').getBoundingClientRect()
             )
           }}>logImgRect</button>
+          {/* <img src={require('./assets/image.jpg').default} className="demoImg"/> */}
         </HashRouter> 
       </FlipParent>
     </Provider>

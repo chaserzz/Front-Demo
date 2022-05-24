@@ -15,7 +15,6 @@ const FlipChild = memo(({children,name}) => {
   // 使用layout获取离开前的dom数据
   useLayoutEffect(() => {
     const curRect = curDom.current.getBoundingClientRect();
-    console.log('mapNameToRect',mapNameToRect)
     if(mapNameToRect[name]){
       const preRect = mapNameToRect[name];
       const {left,top,scalX,scalY} = calculateInvert(preRect,curRect);
@@ -33,7 +32,7 @@ const FlipChild = memo(({children,name}) => {
     setMapNameToRect(curRect,name);
   }, []);
   return (
-    <div id={name} ref={curDom}>
+    <div id={name} ref={curDom} style={{width: 'fit-content', height: 'fit-content'}}>
       {children}
     </div>
   )
