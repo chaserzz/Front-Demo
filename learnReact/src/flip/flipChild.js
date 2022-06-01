@@ -32,7 +32,7 @@ const FlipChild = memo(({children,name}) => {
     setMapNameToRect(curRect,name);
   }, []);
   return (
-    <div id={name} ref={curDom} style={{width: 'fit-content', height: 'fit-content'}}>
+    <div ref={curDom} style={{width: 'fit-content', height: 'fit-content'}}>
       {children}
     </div>
   )

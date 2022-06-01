@@ -4,8 +4,8 @@ import "./index.scss"
 const Teleport2 = memo(() => {
   return (
     <div className='teleport2 inline-block'>
-      <FlipChild name="teleport">
-        <img src={require('../assets/image.jpg').default}/>
+      <FlipChild name="teleport" debugName="teletport2">
+        <img src={require("../assets/image.jpg").default}/>
       </FlipChild>
     </div>
   )
